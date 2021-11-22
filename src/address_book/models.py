@@ -1,5 +1,19 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from django_countries.fields import CountryField
+
+
+class Address(models.Model):
+    country = CountryField(blank_label='(select country)')
+    city = models.CharField("City", max_length=50)
+    street = models.CharField("Street", max_length=50)
+    home_number = models.IntegerField(default=None)
+
+    class Meta:
+        unique_together = ("country", "city", "street", "home_number")
+
+    def __str__(self):
+        return f"{self.country} {self.city} {self.street} {self.home_number}"
 
 
 class Person(models.Model):
@@ -10,6 +24,7 @@ class Person(models.Model):
         ('F', 'Female'),
     )
     gender = models.CharField(null=False, max_length=1, choices=GENDER_CHOICES, default=None)
+    address = models.ForeignKey(Address, null=False, on_delete=models.RESTRICT, related_name="address", default=None)
 
     class Meta:
         unique_together = ('first_name', 'last_name',)
