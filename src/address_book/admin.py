@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Address, Person, Phone
+from .models import Address, Person, Phone, Url
 
 
 @admin.register(Person)
@@ -19,6 +19,13 @@ class PhoneAdmin(admin.ModelAdmin):
 
 @admin.register(Address)
 class AddressAdmin(admin.ModelAdmin):
-    list_display = ("country", "city", "street")
+    list_display = ("country", "city", "street", "house_number")
     list_filter = ("country", "city", "street")
     search_fields = ("country__startswith", "city__startswith", "street__startswith")
+
+
+@admin.register(Url)
+class UrlAdmin(admin.ModelAdmin):
+    list_display = ("link", "url", "person")
+    list_filter = ("link", "person",)
+    search_fields = ("link__startswith", "person__startswith",)

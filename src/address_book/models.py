@@ -7,13 +7,13 @@ class Address(models.Model):
     country = CountryField(blank_label='(select country)')
     city = models.CharField("City", max_length=50)
     street = models.CharField("Street", max_length=50)
-    home_number = models.IntegerField(default=None)
+    house_number = models.IntegerField(default=None)
 
     class Meta:
-        unique_together = ("country", "city", "street", "home_number")
+        unique_together = ("country", "city", "street", "house_number")
 
     def __str__(self):
-        return f"{self.country} {self.city} {self.street} {self.home_number}"
+        return f"{self.country} {self.city} {self.street} {self.house_number}"
 
 
 class Person(models.Model):
@@ -39,3 +39,21 @@ class Phone(models.Model):
 
     def __str__(self):
         return f"{self.phone}"
+
+
+class Url(models.Model):
+    RESOURCE_CHOICES = (
+        ('FB', 'Facebook'),
+        ('LN', 'Linkedin'),
+        ('IN', 'Instagram'),
+        ('GH', 'GitHub'),
+        ('JN', 'Jinni'),
+        ('TW', 'Twitter'),
+        ('WS', 'WebSite'),
+    )
+    link = models.CharField(null=False, max_length=2, choices=RESOURCE_CHOICES, default=None)
+    url = models.URLField(max_length=200)
+    person = models.ForeignKey(Person, on_delete=models.CASCADE, related_name="url")
+
+    def __str__(self):
+        return f"{self.link} {self.url} {self.person}"
