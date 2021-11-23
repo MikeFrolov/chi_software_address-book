@@ -1,20 +1,20 @@
 from django.contrib import admin
 
-from .models import Address, Person, Phone, Url
+from .models import Address, ContactProfile, Person, Phone, Url
 
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
-    list_display = ("first_name", "last_name", "gender", "address")
+    list_display = ("first_name", "last_name", "gender")
     list_filter = ("first_name", "last_name", "gender")
     search_fields = ("first_name__startswith", "last_name__startswith", )
 
 
 @admin.register(Phone)
 class PhoneAdmin(admin.ModelAdmin):
-    list_display = ("phone", "person")
-    list_filter = ("person",)
-    search_fields = ("phone__startswith",)
+    list_display = ("person", "phone")
+    list_filter = ("person", "phone")
+    search_fields = ("person__startswith", "phone__startswith")
 
 
 @admin.register(Address)
@@ -27,5 +27,12 @@ class AddressAdmin(admin.ModelAdmin):
 @admin.register(Url)
 class UrlAdmin(admin.ModelAdmin):
     list_display = ("link", "url", "person")
-    list_filter = ("link", "person",)
-    search_fields = ("link__startswith", "person__startswith",)
+    list_filter = ("person", "link")
+    search_fields = ("person__startswith", "link__startswith",)
+
+
+@admin.register(ContactProfile)
+class ContactProfileAdmin(admin.ModelAdmin):
+    list_display = ("person", "address", "phone")
+    list_filter = ("person", "phone")
+    search_fields = ("person__startswith", "phone__startswith")
