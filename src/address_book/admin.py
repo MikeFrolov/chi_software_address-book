@@ -1,8 +1,14 @@
 from django.contrib import admin
 
-from .models import Address, ContactProfile, Person, Phone, Url
+from .models import Contact  # Address, ContactProfile, Person, Phone, Url
 
 
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ("first_name", "last_name", "phone", )
+
+
+"""
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
     list_display = ("first_name", "last_name", "gender")
@@ -36,3 +42,4 @@ class ContactProfileAdmin(admin.ModelAdmin):
     list_display = ("person", "address", "phone")
     list_filter = ("person", "phone")
     search_fields = ("person__startswith", "phone__startswith")
+"""
