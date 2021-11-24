@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}
+    Delete contact confirm
+{% endblock %}
+{% block page_title %}Are you sure?{% endblock %}
+{% block content %}
+    <h4 class="text-center">You want to delete contact: "{{ object.first_name }} {{object.last_name}}"?</h4>
+    <form class="container" method="post" align="center">
+        {% csrf_token %}
+        <input type="submit" value="Confirm">
+    </form>
+{% endblock %}

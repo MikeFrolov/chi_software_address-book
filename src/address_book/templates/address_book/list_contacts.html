@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+    {% block title %}
+        View all contacts
+    {% endblock %}
+    {% block page_title %}View all contacts{% endblock %}
+    {% block content %}
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr class="active">
+                    <th scope="col">#</th>
+                    <th scope="col">Full name</th>
+                    <th scope="col">Address</th>
+                    <th scope="col" width="50">URL</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for contact in contacts %}
+                <tr>
+                    <td>
+                        {{ contact.id|safe }}
+                    </td>
+                    <td>
+                        {{ contact.first_name|safe }} {{ contact.last_name|safe }}
+                    </td>
+                    <td>
+                        <dl>
+                            <dd>{{ contact.country|safe }}. {{ contact.city|safe }}</dd>
+                            <dd>{{ contact.house_number|safe }} {{ contact.street|safe }} St</dd>
+                        </dl>
+                    </td>
+                    <td><a href="{{ contact.url|safe }}">{{ contact.url|safe }}</a></td>
+                    <td>{{ contact.phone|safe }}</td>
+                    <td>
+                        <a href="{% url 'edit_contact' contact.id %}" class="btn btn-sm btn-secondary">Edit</a>
+                        <a href="{% url 'delete_contact' contact.id %}" class="btn btn-sm btn-dark">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endblock %}
