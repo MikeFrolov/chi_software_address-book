@@ -3,6 +3,25 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django_countries.fields import CountryField
 
 
+class Contact(models.Model):
+    first_name = models.CharField("Name", max_length=200)
+    last_name = models.CharField("Surname", max_length=200)
+    country = CountryField(blank_label='(select country)')
+    city = models.CharField("City", max_length=50)
+    street = models.CharField("Street", max_length=50)
+    house_number = models.IntegerField(default=None)
+    url = models.URLField(max_length=200, unique=True)
+    phone = PhoneNumberField("Phone", null=False, blank=True, unique=True, default=None)
+    profile_pic = models.ImageField(default="profile1.png", null=False, blank=True, upload_to="staticfiles/images/profile/")
+
+    class Meta:
+        unique_together = ('first_name', 'last_name',)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} {self.phone}"
+
+
+"""
 class Person(models.Model):
     first_name = models.CharField("Name", max_length=200)
     last_name = models.CharField("Surname", max_length=200)
@@ -11,7 +30,7 @@ class Person(models.Model):
         ('F', 'Female'),
     )
     gender = models.CharField(null=False, max_length=1, choices=GENDER_CHOICES, default=None)
-    avatar = models.ImageField(default="profile1.png", null=False, blank=True, upload_to="staticfiles/images/profile/")
+    profile_pic = models.ImageField(default="profile1.png", null=False, blank=True, upload_to="staticfiles/images/profile/")
 
     class Meta:
         unique_together = ('first_name', 'last_name',)
@@ -67,3 +86,4 @@ class ContactProfile(models.Model):
 
     def __str__(self):
         return f"{self.person} {self.phone} {self.address} {self.url}"
+"""

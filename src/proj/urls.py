@@ -16,6 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from address_book import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.HomePageView.as_view(), name='home'),
+    path('list_contacts/', views.ListContactsView.as_view(), name='list_contacts'),
+    path('add_contact/', views.AddContactView.as_view(), name='add_contact'),
+    path('edit_contact/<int:pk>', views.EditContactView.as_view(), name='edit_contact'),
+    path('delete_contact/<int:pk>', views.DeleteContactView.as_view(), name='delete_contact'),
 ]
