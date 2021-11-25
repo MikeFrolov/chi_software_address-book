@@ -22,9 +22,9 @@ class ListContactsView(ListView):
                 Q(first_name__icontains=query) |
                 Q(last_name__icontains=query) |
                 Q(phone__icontains=query)
-            )
+            ).order_by('first_name')
         else:
-            contacts = Contact.objects.all()
+            contacts = Contact.objects.all().order_by('first_name')
         return render(request, self.template_name, {'contacts': contacts})
 
 
