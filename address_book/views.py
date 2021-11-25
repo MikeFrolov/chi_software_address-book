@@ -4,8 +4,6 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-
-from . import forms
 from .models import Contact
 
 
