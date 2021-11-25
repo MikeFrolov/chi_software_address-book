@@ -9,6 +9,7 @@ class ContactAdmin(admin.ModelAdmin):
     list_filter = ("first_name", "last_name")
     search_fields = ("first_name__startswith", "last_name__startswith",)
 
+
 """
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):

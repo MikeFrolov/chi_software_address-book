@@ -1,13 +1,12 @@
 from django.db.models import Q
-from django.shortcuts import redirect, render
-from django.views.generic import TemplateView, ListView
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.views.generic import ListView, TemplateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
 
 from . import forms
 from .models import Contact
-import address_book
-import django_filters
 
 
 class HomePageView(TemplateView):

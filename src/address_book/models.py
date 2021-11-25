@@ -1,18 +1,20 @@
 from django.db import models
-from phonenumber_field.modelfields import PhoneNumberField
+
 from django_countries.fields import CountryField
+
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Contact(models.Model):
     first_name = models.CharField("Name", max_length=200)
     last_name = models.CharField("Surname", max_length=200)
-    country = CountryField(blank_label='(select country)')
-    city = models.CharField("City", max_length=50)
-    street = models.CharField("Street", max_length=50)
-    house_number = models.IntegerField(default=None)
-    url = models.URLField(max_length=200, unique=True)
-    phone = PhoneNumberField("Phone", null=False, blank=True, unique=True, default=None)
-    profile_pic = models.ImageField(default="profile1.png", null=False, blank=True, upload_to="staticfiles/images/profile/")
+    country = CountryField(blank=True, blank_label='(select country)')
+    city = models.CharField("City", max_length=50, blank=True)
+    street = models.CharField("Street", max_length=50, blank=True)
+    house_number = models.IntegerField(default=None, null=True, blank=True)
+    url = models.URLField(max_length=200, unique=True, blank=True, help_text="Format: http://site.com")
+    phone = PhoneNumberField("Phone", unique=True, default=None, help_text="Enter only real phone number!")
+    profile_pic = models.ImageField(blank=True, upload_to="staticfiles/images/profile/")
 
     class Meta:
         unique_together = ('first_name', 'last_name',)
@@ -30,7 +32,11 @@ class Person(models.Model):
         ('F', 'Female'),
     )
     gender = models.CharField(null=False, max_length=1, choices=GENDER_CHOICES, default=None)
-    profile_pic = models.ImageField(default="profile1.png", null=False, blank=True, upload_to="staticfiles/images/profile/")
+    profile_pic = models.ImageField(default="profile1.png",
+                                    null=False,
+                                    blank=True,
+                                    upload_to="staticfiles/images/profile/"
+                                    )
 
     class Meta:
         unique_together = ('first_name', 'last_name',)
@@ -79,7 +85,12 @@ class Url(models.Model):
 
 
 class ContactProfile(models.Model):
-    person = models.OneToOneField(Person, on_delete=models.PROTECT, related_name="person", unique=True, null=False, blank=True)
+    person = models.OneToOneField(Person,
+                                  on_delete=models.PROTECT,
+                                  related_name="person",
+                                  unique=True,
+                                  null=False,
+                                  blank=True)
     address = models.ForeignKey(Address, null=False, on_delete=models.PROTECT, related_name="address", default=None)
     phone = models.OneToOneField(Phone, on_delete=models.PROTECT)
     url = models.OneToOneField(Url, on_delete=models.PROTECT)
