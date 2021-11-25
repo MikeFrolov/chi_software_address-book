@@ -6,7 +6,8 @@ from .models import Contact  # Address, ContactProfile, Person, Phone, Url
 @admin.register(Contact)
 class ContactAdmin(admin.ModelAdmin):
     list_display = ("first_name", "last_name", "phone", )
-
+    list_filter = ("first_name", "last_name")
+    search_fields = ("first_name__startswith", "last_name__startswith",)
 
 """
 @admin.register(Person)

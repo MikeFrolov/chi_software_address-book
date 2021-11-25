@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import redirect, render
 from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -6,17 +7,27 @@ from django.urls import reverse_lazy
 from . import forms
 from .models import Contact
 import address_book
+import django_filters
 
 
 class HomePageView(TemplateView):
     template_name = "address_book/home.html"
 
 
-class ListContactsView(TemplateView):
+class ListContactsView(ListView):
+    model = Contact
     template_name = "address_book/list_contacts.html"
 
     def get(self, request, **kwargs):
-        contacts = Contact.objects.all().order_by('id')
+        query = self.request.GET.get('q')
+        if query:
+            contacts = Contact.objects.filter(
+                Q(first_name__icontains=query) |
+                Q(last_name__icontains=query) |
+                Q(phone__icontains=query)
+            )
+        else:
+            contacts = Contact.objects.all()
         return render(request, self.template_name, {'contacts': contacts})
 
 
