@@ -32,11 +32,17 @@ class ListContactsView(ListView):
 
 class AddContactView(CreateView):
     template_name = "address_book/add_new_contact.html"
-    form_class = forms.ContactForm
+    model = Contact
+    fields = ['first_name',
+              'last_name',
+              'country',
+              'city',
+              'street',
+              'house_number',
+              'url',
+              'phone',
+              'profile_pic']
     success_url = reverse_lazy('list_contacts')
-
-    def get_success_url(self) -> str:
-        return super().get_success_url()
 
 
 class EditContactView(UpdateView):

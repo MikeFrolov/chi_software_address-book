@@ -18,6 +18,7 @@
             <thead class="table-dark">
                 <tr class="active">
                     <th scope="col">#</th>
+                    <th scope="col">Photo</th>
                     <th scope="col">Full name</th>
                     <th scope="col">Address</th>
                     <th scope="col" width="50">URL</th>
@@ -30,6 +31,11 @@
                 <tr>
                     <td>
                         {{ contact.id|safe }}
+                    </td>
+                    <td>
+                        {% if contact.profile_pic %}
+                            <img src="{{ contact.profile_pic.url|safe }}">
+                        {% endif %}
                     </td>
                     <td>
                         {{ contact.first_name|safe }} {{ contact.last_name|safe }}

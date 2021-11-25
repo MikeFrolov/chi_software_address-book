@@ -12,9 +12,9 @@ class Contact(models.Model):
     city = models.CharField("City", max_length=50, blank=True)
     street = models.CharField("Street", max_length=50, blank=True)
     house_number = models.IntegerField(default=None, null=True, blank=True)
-    url = models.URLField(max_length=200, unique=True, blank=True, help_text="Format: http://site.com")
+    url = models.URLField(max_length=200, blank=True, help_text="Format: http://site.com")
     phone = PhoneNumberField("Phone", unique=True, default=None, help_text="Enter only real phone number!")
-    profile_pic = models.ImageField(blank=True, upload_to="staticfiles/images/profile/")
+    profile_pic = models.ImageField(blank=True, upload_to="images", default='images/profile_pic1.gif')
 
     class Meta:
         unique_together = ('first_name', 'last_name',)
