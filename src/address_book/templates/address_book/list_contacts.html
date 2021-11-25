@@ -4,6 +4,16 @@
     {% endblock %}
     {% block page_title %}View all contacts{% endblock %}
     {% block content %}
+        <div class="card card-dark bg-light">
+            <div class="container-fluid">
+                <br>
+                <form class="d-flex">
+                  <input class="form-control me-4" name="q" type="text" placeholder="Search by name, surname and phone"
+                         aria-label="Search">
+                  <button class="btn btn-outline-dark" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
         <table class="table table-bordered table-striped">
             <thead class="table-dark">
                 <tr class="active">
@@ -27,7 +37,7 @@
                     <td>
                         <dl>
                             <dd>{{ contact.country|safe }}. {{ contact.city|safe }}</dd>
-                            <dd>{{ contact.house_number|safe }} {{ contact.street|safe }} St</dd>
+                            <dd>{{ contact.house_number|safe }} {{ contact.street|safe }}</dd>
                         </dl>
                     </td>
                     <td><a href="{{ contact.url|safe }}">{{ contact.url|safe }}</a></td>
