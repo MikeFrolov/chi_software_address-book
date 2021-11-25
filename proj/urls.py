@@ -16,6 +16,8 @@ Including another URLconf
 from address_book import views
 
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 
 
@@ -26,4 +28,4 @@ urlpatterns = [
     path('add_contact/', views.AddContactView.as_view(), name='add_contact'),
     path('edit_contact/<int:pk>', views.EditContactView.as_view(), name='edit_contact'),
     path('delete_contact/<int:pk>', views.DeleteContactView.as_view(), name='delete_contact'),
-]
+] +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
